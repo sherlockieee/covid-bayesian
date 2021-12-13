@@ -1,5 +1,7 @@
 import hedgehog as hh
 import pandas as pd
+import streamlit as st
+
 
 bn = hh.BayesNet(
     ("Gabriel", "Ha"), ("Ha", "Esther"), ("Gabriel", "Anais"), ("Ha", "Anais")
@@ -33,4 +35,17 @@ bn.P["Esther"] = pd.Series(
 )
 
 bn.prepare()
-print(bn.query("Anais", event={"Gabriel": True}))
+
+
+###DISPLAYING USING STREAMLIT
+dot = bn.graphviz()
+path = dot.render("COVID", directory="figures", format="svg", cleanup=True)
+
+
+st.graphviz_chart(dot)
+
+"""Probability that Anais has COVID given that Gabriel has COVID"""
+anais = bn.query("Anais", event={"Gabriel": True})
+
+
+st.dataframe(anais)
