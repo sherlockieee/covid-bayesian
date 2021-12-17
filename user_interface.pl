@@ -34,8 +34,8 @@ probability:-
 	check_person_or_zero((write('Person who got COVID (Write "0" if you just want to see the suspected person data): '), write(List2)), List2, Ans2),
 	(	% If no conditional
 		(Ans2 = 0, write('Probability they get COVID: '), ((prob(Ans,[],P), write(P)); write(0)), nl,
-		numberOfChildren(Ans,N1, L1), write('No of people who might give COVID to '), write(Ans), write(': '), write(N1), nl, write(L1),nl,
-		numberOfParent(Ans,N2, L2), write('No of people who '), write(Ans), write(' might give COVID to: '), write(N2), nl, write(L2));
+		numberOfParent(Ans,N1, L1), write('No of people who might give COVID to '), write(Ans), write(': '), write(N1), nl, write(L1),nl,
+		numberOfChildren(Ans,N2, L2), write('No of people who '), write(Ans), write(' might give COVID to: '), write(N2), nl, write(L2));
 		% If there exists a conditional
 		(Ans2 \= 0, findall([P1,P2],path_probability(Ans2,Ans,P1,P2),L),
 		(L = [] -> (write('Path: []'), nl, write('Probability: '), findall(Prob, prob(Ans, [Ans2], Prob), P), write(P), nl); show_prob(L)))
@@ -60,7 +60,8 @@ trace:-
 		findall(Path,causing(A2,A1,Path, A3),L), sort(L, Sorted), write(Sorted), nl)
 	),(   
       (A4 \= 0, write('Path not containing '),write(A4), write(': '), nl,
-          findall(Path,notCausing(A2,A1,Path,A4),L1), sort(L1, Sorted1), write(Sorted1), nl);
+          findall(Path,notCausing(A2,A1,Path,A4),L1), 
+      (   L1 = [] ->   write('None'); (sort(L1, Sorted1), write(Sorted1), nl)));
       (A4 = 0, nl)
     ).
     
@@ -71,7 +72,7 @@ check_person(Query, List, Name) :-
 
 check_person_or_zero(Query, List, Name) :-
     Query, read(TmpName),
-     (  (   \+member(TmpName, List), TmpName\=0) -> write('Name is not valid. Try again.'), nl, check_person(Query, List, Name); 
+     (  (   \+member(TmpName, List), TmpName\=0) -> write('Name is not valid. Try again.'), nl, check_person_or_zero(Query, List, Name); 
     					Name = TmpName).
 
 add_people :-
