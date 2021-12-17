@@ -46,6 +46,11 @@ st.graphviz_chart(dot)
 
 """Probability that Anais has COVID given that Gabriel has COVID"""
 anais = bn.query("Anais", event={"Gabriel": True})
-
-
 st.dataframe(anais)
+
+
+"""Probability that Anais has COVID given that Gabriel and Esther have COVID"""
+anais_esther = bn.query("Anais", event={"Gabriel": True, "Esther": True})
+
+
+st.dataframe(anais_esther)
