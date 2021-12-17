@@ -1,5 +1,3 @@
-
-
 node(meliane).
 node(felipe).
 node(thiago).
