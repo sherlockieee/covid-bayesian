@@ -27,6 +27,6 @@ $ consult('bayesian_network.pl').
 ```
 Remember the dots!!!
 
-4. Run `menu.` in your terminal after consultation.
+4. Run `menu.` in your terminal.
 
-5. Enjoy :)) 
+5. Enjoy :)) Again, remember the dots!
